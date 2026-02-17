@@ -1,0 +1,13 @@
+package com.oepfelbaum.digitalwallet;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+
+@SpringBootApplication
+@ConfigurationPropertiesScan
+public class DigitalwalletApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(DigitalwalletApplication.class, args);
+	}
+}
