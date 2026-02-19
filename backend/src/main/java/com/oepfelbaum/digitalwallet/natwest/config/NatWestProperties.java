@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.natwest;
+package com.oepfelbaum.digitalwallet.natwest.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

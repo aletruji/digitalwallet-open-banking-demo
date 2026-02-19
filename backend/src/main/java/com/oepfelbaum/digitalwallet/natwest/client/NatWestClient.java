@@ -1,5 +1,6 @@
-package com.oepfelbaum.digitalwallet.natwest;
+package com.oepfelbaum.digitalwallet.natwest.client;
 
+import com.oepfelbaum.digitalwallet.natwest.config.NatWestProperties;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -16,7 +17,9 @@ public class NatWestClient {
         this.props = props;
     }
 
-    public Map<String, Object> postForm(String url, Map<String, String> form) {
+
+    public <T> T postForm(String url, Map<String,String> form, Class<T> type)
+    {
         String body = form.entrySet().stream()
                 .map(e -> enc(e.getKey()) + "=" + enc(e.getValue()))
                 .reduce((a, b) -> a + "&" + b)
@@ -27,27 +30,20 @@ public class NatWestClient {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(body)
                 .retrieve()
-                .body(Map.class);
+                .body(type);
     }
 
-    public Map<String, Object> postJson(String url, Object json, String bearerToken) {
+
+    public <T> T postJson(String url, Object json, String bearerToken, Class<T> type) {
         var req = rest.post().uri(url).contentType(MediaType.APPLICATION_JSON).body(json);
-        if (bearerToken != null) req = req.header("Authorization", "Bearer " + bearerToken);
-        return req.retrieve().body(Map.class);
+        if (bearerToken != null && !bearerToken.isBlank()) {
+            req = req.header("Authorization", "Bearer " + bearerToken);
+        }
+        return req.retrieve().body(type);
     }
 
 
-
-    public Map<String, Object> get(String url, String bearerToken) {
-        return get(url, bearerToken, Map.of(
-                "Accept", "application/json",
-                "x-fapi-financial-id", "0015800000jfwxXAAQ",
-                "x-fapi-interaction-id", java.util.UUID.randomUUID().toString()
-        ));
-    }
-
-
-    public Map<String, Object> get(String url, String bearerToken, Map<String, String> headers) {
+    public <T> T get(String url, String bearerToken, Map<String, String> headers, Class<T> type) {
         var req = rest.get().uri(url);
 
         if (bearerToken != null && !bearerToken.isBlank()) {
@@ -60,15 +56,14 @@ public class NatWestClient {
             }
         }
 
-        return req.retrieve().body(Map.class);
+        return req.retrieve().body(type);
     }
-
-
 
 
     public NatWestProperties props() { return props; }
 
-    public static String enc(String s) {
+
+    private static String enc(String s) {
         return java.net.URLEncoder.encode(s, java.nio.charset.StandardCharsets.UTF_8);
     }
 
