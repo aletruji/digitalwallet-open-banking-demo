@@ -18,14 +18,16 @@ backend/.env
 ---
 
 ## Start Backend
+cd backend 
+/
 
 Windows (CMD only):
-cd backend
+
 for /f "usebackq delims=" %i in (.env) do @set %i
 mvnw.cmd spring-boot:run
 
 macOS:
-cd backend
+
 export $(grep -v '^#' .env | xargs)
 ./mvnw spring-boot:run
 
@@ -35,9 +37,9 @@ http://localhost:8080
 ---
 
 ## Start Frontend (Windows & mac)
-
 cd frontend
-npm install
+/
+
 ng serve --proxy-config proxy.conf.json
 
 Frontend runs on:
