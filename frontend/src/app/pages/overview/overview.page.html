@@ -1,0 +1,87 @@
+<app-page-header
+  [title]="customerName"
+  [showReload]="true"
+  [loading]="loading"
+  [reloadFn]="reload"
+></app-page-header>
+
+<main class="max-w-3xl mx-auto px-6 py-8 space-y-6">
+
+
+  <!-- spinner when !data -->
+  <div *ngIf="loading && !data" class="flex justify-center py-10">
+    <div class="h-10 w-10 rounded-full border-4 border-gray-200 border-t-[#8b1c2d] animate-spin"></div>
+  </div>
+
+  <!-- error -->
+  <div *ngIf="!loading && error"
+       class="bg-white border rounded-2xl shadow p-4 text-red-700 font-semibold">
+    {{ error }}
+  </div>
+
+  <!-- content -->
+  <div *ngIf="data" class="space-y-6">
+
+    <!-- total value cards -->
+    <div class="bg-white rounded-2xl shadow p-6  place-items-center">
+      <div class="text-sm text-gray-500">Gesamtvermoegen</div>
+
+      <div class="text-3xl font-semibold"
+           [class.text-red-700]="data.totalIsNegative"
+           [class.text-gray-900]="!data.totalIsNegative">
+        {{ data.totalAmount | number:'1.2-2' }} GBP
+      </div>
+      <div class="text-sm text-gray-500 mt-2">
+        {{ today | date:'yyyy-MM-dd' }}
+      </div>
+    </div>
+
+    <!-- accounts -->
+    <div class="space-y-3">
+
+      <button
+        *ngFor="let a of data.accounts"
+        type="button"
+        class="w-full text-left bg-white rounded-2xl shadow p-4 hover:shadow-md transition"
+        (click)="openAccount(a.accountId)"
+      >
+        <div class="flex items-center justify-between">
+
+
+          <div class="flex items-center gap-3">
+          <img
+            src="/assets/bank/natwestlogo.png"
+            alt="Bank Logo"
+            class="h-15 w-15 object-contain"
+          />
+
+          <div>
+            <div class="text-sm text-gray-500">
+              {{ a.bankName }}
+
+            </div>
+
+            <div class="text-lg font-semibold text-gray-900">
+              {{ a.accountSubType }}
+            </div>
+          </div>
+          </div>
+          <div class="text-right">
+            <div class="text-lg font-semibold"
+                 [class.text-red-700]="a.isNegative"
+                 [class.text-gray-900]="!a.isNegative">
+              {{ a.balance | number:'1.2-2' }} {{ a.currency }}
+            </div>
+
+            <div class="text-xs text-gray-500">
+              Klicken für Details
+            </div>
+          </div>
+
+        </div>
+      </button>
+
+    </div>
+
+  </div>
+</main>

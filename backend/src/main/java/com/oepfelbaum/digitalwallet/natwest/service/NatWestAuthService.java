@@ -44,8 +44,8 @@ public class NatWestAuthService {
         NatWestTokenResponse tokens = exchangeCodeForToken(code);
         storeTokens(tokens);
 
-
     }
+
 
     public void disconnect() {
         repo.deleteById(TOKEN_ID);
@@ -60,53 +60,7 @@ public class NatWestAuthService {
     }
 
 
-    public String getValidUserAccessToken() {
-        log.info("NatWest access token expired. Refreshing token");
-
-        NatWestTokenEntity e = repo.findById(TOKEN_ID)
-                .orElseThrow(() -> new IllegalStateException("Not connected. Call POST /api/natwest/connect"));
-
-        if (e.getAccessToken() != null && e.getAccessTokenExpiresAt() != null && Instant.now().isBefore(e.getAccessTokenExpiresAt())) {
-            return e.getAccessToken();
-        }
-
-        if (e.getRefreshToken() == null || e.getRefreshToken().isBlank()) {
-            log.warn("NatWest refresh token missing for userId={}", TOKEN_ID);
-            throw new IllegalStateException("No refresh token. Reconnect needed.");
-        }
-
-        NatWestTokenResponse refreshed = refreshAccessToken(e.getRefreshToken());
-        storeTokens(refreshed);
-
-        return refreshed.accessToken();
-    }
-
-
-    private void storeTokens(NatWestTokenResponse json) {
-        String access = json.accessToken();
-        String refresh = json.refreshToken();
-        Long expiresIn = json.expiresIn();
-
-        if (access == null || access.isBlank() || expiresIn == null) {
-            throw new IllegalStateException("Token response invalid (missing access_token/expires_in)");
-        }
-
-        Instant expiresAt = Instant.now().plusSeconds(Math.max(0, expiresIn - 10));
-
-        NatWestTokenEntity e = repo.findById(TOKEN_ID)
-                .orElseGet(() -> new NatWestTokenEntity(TOKEN_ID, access, expiresAt, refresh));
-
-        e.setAccessToken(access);
-        e.setAccessTokenExpiresAt(expiresAt);
-
-        if (refresh != null && !refresh.isBlank()) {
-            e.setRefreshToken(refresh);
-        }
-
-        repo.save(e);
-    }
-
-
+         //1. send costumer id and secret, get acces_token for app auth
     private String getClientCredentialsToken() {
         String url = client.props().baseOb() + "/token";
 
@@ -125,7 +79,7 @@ public class NatWestAuthService {
     }
 
 
-
+    //2. send permission request and header with access token, get consentId
     private String createConsent(String appToken) {
         String url = client.props().baseOb() + "/open-banking/v4.0/aisp/account-access-consents";
 
@@ -150,29 +104,7 @@ public class NatWestAuthService {
         return json.Data().ConsentId();
     }
 
-
-    private NatWestTokenResponse exchangeCodeForToken(String code) {
-        String url = client.props().baseOb() + "/token";
-        return client.postForm(url, Map.of(
-                "client_id", client.props().clientId(),
-                "client_secret", client.props().clientSecret(),
-                "redirect_uri", client.props().redirectUri(),
-                "grant_type", "authorization_code",
-                "code", code
-        ), NatWestTokenResponse.class);
-    }
-
-
-    private NatWestTokenResponse refreshAccessToken(String refreshToken) {
-        String url = client.props().baseOb() + "/token";
-        return client.postForm(url, Map.of(
-                "grant_type", "refresh_token",
-                "refresh_token", refreshToken,
-                "client_id", client.props().clientId(),
-                "client_secret", client.props().clientSecret()
-        ), NatWestTokenResponse.class);
-    }
-
+    //3. simulating user identification with auto postman sending consentId, getting authorization code
     private String authorizeAutoPostman(String consentId) {
         var p = client.props();
 
@@ -203,5 +135,74 @@ public class NatWestAuthService {
         return map.extractCode(json.redirectUri());
     }
 
+    //with clientId + secret + authorization code, getting access token (limited in time) and refresh token
+    private NatWestTokenResponse exchangeCodeForToken(String code) {
+        String url = client.props().baseOb() + "/token";
+        return client.postForm(url, Map.of(
+                "client_id", client.props().clientId(),
+                "client_secret", client.props().clientSecret(),
+                "redirect_uri", client.props().redirectUri(),
+                "grant_type", "authorization_code",
+                "code", code
+        ), NatWestTokenResponse.class);
+    }
 
-}
+
+    private void storeTokens(NatWestTokenResponse json) {
+        String access = json.accessToken();
+        String refresh = json.refreshToken();
+        Long expiresIn = json.expiresIn();
+
+        if (access == null || access.isBlank() || expiresIn == null) {
+            throw new IllegalStateException("Token response invalid (missing access_token/expires_in)");
+        }
+
+        Instant expiresAt = Instant.now().plusSeconds(Math.max(0, expiresIn - 10));
+
+        NatWestTokenEntity e = repo.findById(TOKEN_ID)
+                .orElseGet(() -> new NatWestTokenEntity(TOKEN_ID, access, expiresAt, refresh));
+
+        e.setAccessToken(access);
+        e.setAccessTokenExpiresAt(expiresAt);
+
+        if (refresh != null && !refresh.isBlank()) {
+            e.setRefreshToken(refresh);
+        }
+
+        repo.save(e);
+    }
+
+
+    private NatWestTokenResponse refreshAccessToken(String refreshToken) {
+        String url = client.props().baseOb() + "/token";
+        return client.postForm(url, Map.of(
+                "grant_type", "refresh_token",
+                "refresh_token", refreshToken,
+                "client_id", client.props().clientId(),
+                "client_secret", client.props().clientSecret()
+        ), NatWestTokenResponse.class);
+    }
+
+
+    public String getValidUserAccessToken() {
+        log.info("NatWest access token expired. Refreshing token");
+
+        NatWestTokenEntity e = repo.findById(TOKEN_ID)
+                .orElseThrow(() -> new IllegalStateException("Not connected. Call POST /api/natwest/connect"));
+
+        if (e.getAccessToken() != null && e.getAccessTokenExpiresAt() != null && Instant.now().isBefore(e.getAccessTokenExpiresAt())) {
+            return e.getAccessToken();
+        }
+
+        if (e.getRefreshToken() == null || e.getRefreshToken().isBlank()) {
+            log.warn("NatWest refresh token missing for userId={}", TOKEN_ID);
+            throw new IllegalStateException("No refresh token. Reconnect needed.");
+        }
+
+        NatWestTokenResponse refreshed = refreshAccessToken(e.getRefreshToken());
+        storeTokens(refreshed);
+
+        return refreshed.accessToken();
+    }
+
+  }

@@ -1,0 +1,51 @@
+<header class="bg-[#8b1c2d] text-white px-6 py-5 shadow">
+  <div class="max-w-3xl mx-auto relative flex items-center">
+
+    <div class="flex items-center gap-4">
+
+      <!-- back -->
+      <button
+        *ngIf="showBack"
+        type="button"
+        (click)="goBack()"
+        class="border border-white text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-white hover:text-[#8b1c2d] transition"
+      >
+        Zurück
+      </button>
+
+      <div class="text-lg font-semibold">
+        {{ leftLabel }}
+      </div>
+    </div>
+
+    <div *ngIf="title" class="absolute left-1/2 -translate-x-1/2 font-semibold pointer-events-none">
+      {{ title }}
+    </div>
+
+    <div class="ml-auto flex items-center gap-3">
+
+      <!-- reload -->
+      <button
+        *ngIf="showReload"
+        type="button"
+        (click)="reload()"
+        [disabled]="loading"
+        class="bg-white text-[#8b1c2d] text-sm font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ loading ? 'Lädt...' : 'Neu laden' }}
+      </button>
+
+      <!-- auth -->
+      <button
+        *ngIf="showAuthButton"
+        type="button"
+        (click)="logoutOrLogin()"
+        [disabled]="loading"
+        class="border border-white text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-white hover:text-[#8b1c2d] transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ connected ? 'Abmelden' : 'Anmelden' }}
+      </button>
+
+    </div>
+  </div>
+</header>

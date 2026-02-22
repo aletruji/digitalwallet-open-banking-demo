@@ -1,0 +1,115 @@
+<app-page-header
+  [leftLabel]="'Kontodetails'"
+  [title]="data?.accountName?? null"
+  [showBack]="true"
+  [backUrl]="['/overview']"
+  [showReload]="true"
+  [loading]="loading"
+  [reloadFn]="reload"
+></app-page-header>
+
+
+
+
+<main class="max-w-3xl mx-auto px-6 py-8 space-y-6">
+
+  <!-- spinner if !data-->
+  <div *ngIf="loading && !data" class="flex justify-center py-8">
+    <div class="h-10 w-10 rounded-full border-4 border-gray-200 border-t-[#8b1c2d] animate-spin"></div>
+  </div>
+
+  <!-- error -->
+  <div *ngIf="error" class="bg-white border rounded-2xl shadow p-4 text-red-700 font-semibold">
+    {{ error }}
+  </div>
+
+  <!-- account card -->
+  <div *ngIf="data" class="bg-white rounded-2xl shadow p-6">
+
+    <div class="flex items-center gap-3">
+      <img
+        src="/assets/bank/natwestlogo.png"
+        alt="Bank Logo"
+        class="h-14 w-14 object-contain"
+      />
+
+      <div>
+        <div class="text-sm text-gray-500">
+          {{ data.bankName }}
+        </div>
+
+        <div class="text-lg font-semibold text-gray-900">
+          {{ data.accountSubType }}
+        </div>
+      </div>
+    </div>
+
+    <!-- balance -->
+    <div class="mt-4 text-sm text-gray-500">Kontostand</div>
+
+    <div class="text-3xl font-semibold"
+         [class.text-red-700]="data.isNegative"
+         [class.text-gray-900]="!data.isNegative">
+      {{ data.balance | number:'1.2-2' }} {{ data.currency }}
+    </div>
+
+  </div>
+
+
+  <div *ngIf="data" class="space-y-3">
+    <div class="flex items-center justify-between">
+      <div class="text-sm text-gray-500">
+        Transaktionen letzte 30 Tage
+      </div>
+
+      <!-- sort switch -->
+      <div class="flex items-center gap-2 text-sm">
+    <span>
+      {{ sortAsc ? 'Älteste zuerst' : 'Neueste zuerst' }}
+    </span>
+
+        <button
+          type="button"
+          class="relative inline-flex h-6 w-11 items-center rounded-full transition border border-gray-300"
+          [class.bg-[#8b1c2d]]="sortAsc"
+          [class.bg-gray-300]="!sortAsc"
+          (click)="toggleSort()"
+        >
+      <span
+        class="inline-block h-5 w-5 transform rounded-full transition"
+        [class.bg-white]="true"
+        [class.translate-x-5]="sortAsc"
+        [class.translate-x-1]="!sortAsc"
+      ></span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- transactions -->
+    <div *ngFor="let t of data.transactions" class="bg-white rounded-2xl shadow p-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-xs text-gray-500">{{ t.date }}</div>
+          <div class="text-base font-semibold text-gray-900">
+            {{ t.counterparty }}
+          </div>
+        </div>
+
+        <!-- transaction amount -->
+        <div class="text-right">
+          <div class="text-lg font-semibold"
+               [class.text-red-700]="t.isNegative"
+               [class.text-gray-900]="!t.isNegative">
+            {{ t.amount | number:'1.2-2' }} {{ t.currency }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- empty state -->
+    <div *ngIf="data.transactions.length === 0" class="text-gray-600">
+      Keine Transaktionen in den letzten 30 Tagen
+    </div>
+  </div>
+</main>

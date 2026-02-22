@@ -1,0 +1,36 @@
+# Allgemein
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.log
+
+# IntelliJ
+.idea/
+*.iml
+
+# Maven / Spring Boot
+target/
+**/target/
+
+# Node / Angular
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.angular/
+.cache/
+coverage/
+
+# Angular build artifacts
+out/
+tmp/
+
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+coverage/
+
+# VS Code
+.vscode/
