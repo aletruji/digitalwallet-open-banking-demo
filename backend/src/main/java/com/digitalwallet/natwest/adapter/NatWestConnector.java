@@ -1,9 +1,10 @@
-package com.oepfelbaum.digitalwallet.natwest.adapter;
+package com.digitalwallet.natwest.adapter;
 
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestAccountsResponse;
-import com.oepfelbaum.digitalwallet.natwest.service.NatWestAuthService;
-import com.oepfelbaum.digitalwallet.natwest.service.NatWestDataService;
-import com.oepfelbaum.digitalwallet.wallet.port.WalletConnector;
+import com.digitalwallet.natwest.dto.NatWestAccountsResponse;
+import com.digitalwallet.natwest.dto.NatWestTransactionsResponse;
+import com.digitalwallet.natwest.service.NatWestAuthService;
+import com.digitalwallet.natwest.service.NatWestDataService;
+import com.digitalwallet.wallet.port.WalletConnector;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -82,7 +83,7 @@ public class NatWestConnector implements WalletConnector {
     public List<WalletConnector.Transaction> transactions(String accountId) {
         var res = data.transactions(accountId);
 
-        List<com.oepfelbaum.digitalwallet.natwest.dto.NatWestTransactionsResponse.TransactionItem> list =
+        List<NatWestTransactionsResponse.TransactionItem> list =
                 (res != null && res.Data() != null && res.Data().Transaction() != null)
                         ? res.Data().Transaction()
                         : List.of();

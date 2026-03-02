@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.wallet.domain;
+package com.digitalwallet.wallet.domain;
 
 import org.junit.Test;
 

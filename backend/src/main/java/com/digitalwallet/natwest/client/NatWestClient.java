@@ -1,6 +1,6 @@
-package com.oepfelbaum.digitalwallet.natwest.client;
+package com.digitalwallet.natwest.client;
 
-import com.oepfelbaum.digitalwallet.natwest.config.NatWestProperties;
+import com.digitalwallet.natwest.config.NatWestProperties;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

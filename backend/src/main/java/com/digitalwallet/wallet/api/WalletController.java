@@ -1,9 +1,9 @@
-package com.oepfelbaum.digitalwallet.wallet.api;
+package com.digitalwallet.wallet.api;
 
 
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletAccountDetailsDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletOverviewDto;
-import com.oepfelbaum.digitalwallet.wallet.service.WalletService;
+import com.digitalwallet.wallet.dto.WalletAccountDetailsDto;
+import com.digitalwallet.wallet.dto.WalletOverviewDto;
+import com.digitalwallet.wallet.service.WalletService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

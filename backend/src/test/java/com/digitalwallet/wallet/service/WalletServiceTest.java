@@ -1,9 +1,9 @@
-package com.oepfelbaum.digitalwallet.wallet.service;
+package com.digitalwallet.wallet.service;
 
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletAccountDetailsDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletOverviewDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletTransactionDto;
-import com.oepfelbaum.digitalwallet.wallet.port.WalletConnector;
+import com.digitalwallet.wallet.dto.WalletAccountDetailsDto;
+import com.digitalwallet.wallet.dto.WalletOverviewDto;
+import com.digitalwallet.wallet.dto.WalletTransactionDto;
+import com.digitalwallet.wallet.port.WalletConnector;
 import org.junit.Test;
 
 import java.math.BigDecimal;

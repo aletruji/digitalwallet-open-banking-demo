@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.natwest.db;
+package com.digitalwallet.natwest.db;
 
 
 import jakarta.persistence.Entity;

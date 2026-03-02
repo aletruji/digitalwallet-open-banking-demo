@@ -1,10 +1,10 @@
-package com.oepfelbaum.digitalwallet.natwest.service;
+package com.digitalwallet.natwest.service;
 
-import com.oepfelbaum.digitalwallet.natwest.client.NatWestClient;
-import com.oepfelbaum.digitalwallet.natwest.db.NatWestTokenEntity;
-import com.oepfelbaum.digitalwallet.natwest.db.NatWestTokenRepository;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestTokenResponse;
-import com.oepfelbaum.digitalwallet.natwest.mapper.NatWestMapper;
+import com.digitalwallet.natwest.client.NatWestClient;
+import com.digitalwallet.natwest.db.NatWestTokenEntity;
+import com.digitalwallet.natwest.db.NatWestTokenRepository;
+import com.digitalwallet.natwest.dto.NatWestTokenResponse;
+import com.digitalwallet.natwest.mapper.NatWestMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Answers;

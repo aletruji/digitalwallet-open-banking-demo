@@ -1,12 +1,12 @@
-package com.oepfelbaum.digitalwallet.natwest.service;
+package com.digitalwallet.natwest.service;
 
 
 
-import com.oepfelbaum.digitalwallet.natwest.client.NatWestClient;
-import com.oepfelbaum.digitalwallet.natwest.config.NatWestProperties;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestAccountsResponse;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestBalancesResponse;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestTransactionsResponse;
+import com.digitalwallet.natwest.client.NatWestClient;
+import com.digitalwallet.natwest.config.NatWestProperties;
+import com.digitalwallet.natwest.dto.NatWestAccountsResponse;
+import com.digitalwallet.natwest.dto.NatWestBalancesResponse;
+import com.digitalwallet.natwest.dto.NatWestTransactionsResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

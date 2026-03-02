@@ -1,11 +1,11 @@
-package com.oepfelbaum.digitalwallet.wallet.service;
+package com.digitalwallet.wallet.service;
 
-import com.oepfelbaum.digitalwallet.wallet.domain.MoneyRounder;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletAccountDetailsDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletAccountDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletOverviewDto;
-import com.oepfelbaum.digitalwallet.wallet.dto.WalletTransactionDto;
-import com.oepfelbaum.digitalwallet.wallet.port.WalletConnector;
+import com.digitalwallet.wallet.domain.MoneyRounder;
+import com.digitalwallet.wallet.dto.WalletAccountDetailsDto;
+import com.digitalwallet.wallet.dto.WalletAccountDto;
+import com.digitalwallet.wallet.dto.WalletOverviewDto;
+import com.digitalwallet.wallet.dto.WalletTransactionDto;
+import com.digitalwallet.wallet.port.WalletConnector;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

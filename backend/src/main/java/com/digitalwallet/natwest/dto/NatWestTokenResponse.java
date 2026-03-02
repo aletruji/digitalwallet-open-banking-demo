@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.natwest.dto;
+package com.digitalwallet.natwest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

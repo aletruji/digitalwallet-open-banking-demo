@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.natwest.mapper;
+package com.digitalwallet.natwest.mapper;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;

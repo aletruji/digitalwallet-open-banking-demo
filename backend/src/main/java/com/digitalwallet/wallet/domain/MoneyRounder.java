@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.wallet.domain;
+package com.digitalwallet.wallet.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

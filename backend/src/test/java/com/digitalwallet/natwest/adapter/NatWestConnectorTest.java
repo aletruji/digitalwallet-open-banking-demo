@@ -1,9 +1,9 @@
-package com.oepfelbaum.digitalwallet.natwest.adapter;
+package com.digitalwallet.natwest.adapter;
 
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestAccountsResponse;
-import com.oepfelbaum.digitalwallet.natwest.service.NatWestAuthService;
-import com.oepfelbaum.digitalwallet.natwest.service.NatWestDataService;
-import com.oepfelbaum.digitalwallet.wallet.port.WalletConnector;
+import com.digitalwallet.natwest.dto.NatWestAccountsResponse;
+import com.digitalwallet.natwest.service.NatWestAuthService;
+import com.digitalwallet.natwest.service.NatWestDataService;
+import com.digitalwallet.wallet.port.WalletConnector;
 import org.junit.Test;
 
 import java.math.BigDecimal;

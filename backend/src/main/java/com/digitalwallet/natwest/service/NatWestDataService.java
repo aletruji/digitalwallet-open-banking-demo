@@ -1,11 +1,11 @@
-package com.oepfelbaum.digitalwallet.natwest.service;
+package com.digitalwallet.natwest.service;
 
-import com.oepfelbaum.digitalwallet.natwest.client.NatWestClient;
+import com.digitalwallet.natwest.client.NatWestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestAccountsResponse;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestBalancesResponse;
-import com.oepfelbaum.digitalwallet.natwest.dto.NatWestTransactionsResponse;
+import com.digitalwallet.natwest.dto.NatWestAccountsResponse;
+import com.digitalwallet.natwest.dto.NatWestBalancesResponse;
+import com.digitalwallet.natwest.dto.NatWestTransactionsResponse;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;

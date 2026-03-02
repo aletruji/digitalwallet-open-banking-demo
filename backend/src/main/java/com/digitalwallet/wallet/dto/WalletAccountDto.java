@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.wallet.dto;
+package com.digitalwallet.wallet.dto;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package com.oepfelbaum.digitalwallet.exeption;
+package com.digitalwallet.exeption;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
