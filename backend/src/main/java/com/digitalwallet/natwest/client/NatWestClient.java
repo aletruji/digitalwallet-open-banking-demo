@@ -35,7 +35,10 @@ public class NatWestClient {
 
 
     public <T> T postJson(String url, Object json, String bearerToken, Class<T> type) {
-        var req = rest.post().uri(url).contentType(MediaType.APPLICATION_JSON).body(json);
+        var req = rest.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(json);
         if (bearerToken != null && !bearerToken.isBlank()) {
             req = req.header("Authorization", "Bearer " + bearerToken);
         }
